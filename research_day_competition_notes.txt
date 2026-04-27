@@ -1,0 +1,42 @@
+RESEARCH DAY COMPETITION NOTES
+
+Title:
+Probability-Driven Statistical Modeling and Verification of Random Signals and Noise in Electrical Power Systems
+
+1-minute pitch:
+This paper treats measured power-system waveforms as stochastic observations instead of ideal sinusoids. We model the measured signal as the sum of a fundamental component, harmonics, a transient, slow random load and renewable variations, and Gaussian measurement noise. Then we do something stronger than descriptive plotting: we derive exact probability models for monitoring performance. We derive the expectation of mean-square error, a Rice-distribution model for amplitude-estimation risk, and a chi-square / noncentral chi-square model for transient detection under a false-alarm constraint. MATLAB-oriented simulations and independent Python verification show very close theory-simulation agreement. So the paper proves that probability and statistics are not extra tools added at the end - they are the main framework for quantifying measurement reliability in power systems.
+
+Most important equations to explain:
+1) x[k] = s[k] + h[k] + tau[k] + delta[k] + n[k]
+2) E{MSE} = P_h + P_tau + P_delta + sigma_n^2
+3) theta_hat = (H^T H)^(-1) H^T y
+4) P(|A_hat - A| > epsilon A) using the Rice distribution
+5) J = (1/Nw) ||(I - P_d)x||^2
+6) Under H0: (Nw J / sigma_n^2) ~ chi-square
+7) Under H1: (Nw J / sigma_n^2) ~ noncentral chi-square
+
+Numbers judges will remember:
+- Mean MSE rises from 0.0023 pu^2 at 30 dB to 0.1596 pu^2 at 5 dB.
+- Probability of amplitude error > 1% rises from about 0 at 30 dB to 0.8096 at 5 dB.
+- With false alarm fixed at 5%, detection probability is 0.7332 at 15 dB, 0.1978 at 10 dB, and 0.0812 at 5 dB.
+- Theory and Monte Carlo agree within 2.9e-4 pu^2 in mean MSE, 8.2e-3 in amplitude-error probability, and 3.2e-3 in detection probability.
+
+Why the paper is strong competitively:
+- It is clearly connected to power systems, not just pure statistics.
+- It uses probability in a deep way: distributions, estimators, confidence intervals, and hypothesis testing.
+- It has both derivation and simulation.
+- It translates uncertainty into engineering risk and decision reliability.
+- It is easy to defend because every result has a physical interpretation.
+
+Likely questions from professors:
+Q: Why AR(1) for load and renewable variability?
+A: Because it is the simplest stochastic process with memory. It captures gradual operating changes better than independent random samples and keeps the model easy to explain.
+
+Q: Why Gaussian measurement noise?
+A: It is the standard baseline model in statistical signal processing and it was numerically supported by the histogram, skewness, kurtosis, and KS test in the study.
+
+Q: Why is this useful for power systems?
+A: PMUs, smart meters, relays, and state-estimation algorithms all depend on measured waveforms. The paper quantifies how uncertainty changes the probability of making a wrong measurement or a missed event decision.
+
+Q: What is the strongest result?
+A: The strongest result is that we obtained closed-form probabilistic performance models and then verified them numerically, instead of relying only on empirical plots.
